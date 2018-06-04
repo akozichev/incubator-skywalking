@@ -1,0 +1,37 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: skywalking-collector
+  labels:
+    app: skywalking-collector
+  namespace: skywalking
+spec:
+  template:
+    metadata:
+      labels:
+        app: skywalking-collector
+    spec:
+      containers:
+      - image: akozichev/skywalking-collector:latest
+        name: skywalking-collector
+        imagePullPolicy: Always
+        env:
+        - name: SOMEVAR
+          value: test
+        volumeMounts:
+        - mountPath:  /opt/skywalking/collector/config
+          name: skywalking-collector-config
+        ports:
+        - containerPort: 80
+      volumes:
+      - name: skywalking-collector-config
+        configMap:
+          name: skywalking-collector-config
+          items:
+          - key: config
+            path:  application.yml
+          - key: log4j
+            path:  log4j.xml
+      imagePullSecrets:
+      - name: registrykey

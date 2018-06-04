@@ -1,0 +1,8 @@
+FROM maven:3.3.3-jdk-8 
+ENV SKYWALKING_HOME=/usr/local/skywalking
+RUN mkdir -p $SKYWALKING_HOME
+WORKDIR $SKYWALKING_HOME
+ADD . $SKYWALKING_HOME
+RUN cd $SKYWALKING_HOME && mvn clean package -DskipTests
+
+

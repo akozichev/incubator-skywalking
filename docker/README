@@ -1,0 +1,12 @@
+To build the project in a Docker container in the root directory of the project:
+
+docker build -t skywalking_build_image -f docker/Dockerfile.build
+docker create --name skywalking_build skywalking_build_image
+docker cp skywalking_build:/usr/local/skywalking/dist .
+
+from the dist folder
+
+docker build -t akozichev/skywalking-collector -f ../../docker/Dockerfile .
+
+
+
