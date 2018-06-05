@@ -18,9 +18,9 @@ items:
 - apiVersion: apps/v1
   kind: StatefulSet
   metadata:
-    name: elasticsearch
+    name: skywalking-elasticsearch
     labels:
-      app: skywalking
+      app: skywalking-elasticsearch
       skywalking-infra: elasticsearch-statefulset
     namespace: skywalking
   spec:
@@ -37,16 +37,20 @@ items:
       spec:
         containers:
           - name: elasticsearch
-            image: docker.elastic.co/elasticsearch/elasticsearch:5.6.0
+            image: docker.elastic.co/elasticsearch/elasticsearch:5.5.3
             imagePullPolicy: Always
-            command:
-              - bin/elasticsearch
+            securityContext:
+              runAsUser: 1000
+              allowPrivilegeEscalation: false
             env:
               - name: ES_JAVA_OPTS
                 value: "-Xms256m -Xmx256m"
-            args:
-              - "-Ehttp.host=0.0.0.0"
-              - "-Etransport.host=0.0.0.0"
+              - name: xpack.security.enabled
+                value: "false"
+              - name: http.host
+                value: "0.0.0.0"
+              - name: discovery.type
+                value: "single-node"
             volumeMounts:
               - name: elkdata
                 mountPath: /data
