@@ -23,7 +23,7 @@ items:
           - mountPath:  /opt/skywalking/collector/config
             name: skywalking-collector-config
           ports:
-          - containerPort: 80
+          - containerPort: 10800
         volumes:
         - name: skywalking-collector-config
           configMap:
