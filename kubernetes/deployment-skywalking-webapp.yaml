@@ -36,7 +36,7 @@ items:
       app: skywalking-webapp
     namespace: skywalking
   spec:
-    clusterIP: None
+    type: NodePort
     selector:
       app: skywalking-webapp
     ports:
