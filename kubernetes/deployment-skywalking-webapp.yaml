@@ -1,0 +1,45 @@
+---
+apiVersion: v1
+kind: List
+items:
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: skywalking-webapp
+    labels:
+      app: skywalking-webapp
+    namespace: skywalking
+  spec:
+    template:
+      metadata:
+        labels:
+          app: skywalking-webapp
+      spec:
+        containers:
+        - image: akozichev/skywalking-webapp:latest
+          name: skywalking-webapp
+          imagePullPolicy: Always
+          env:
+          - name: 'COLLECTOR_SERVERS'
+            value: 'skywalking-collector:10800'
+          - name: 'SERVER_PORT'
+            value: '8080'
+          ports:
+          - containerPort: 8080
+        imagePullSecrets:
+        - name: registrykey
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: skywalking-webapp
+    labels:
+      app: skywalking-webapp
+    namespace: skywalking
+  spec:
+    clusterIP: None
+    selector:
+      app: skywalking-webapp
+    ports:
+    - port: 8080
+      name: skywalking-webapp
+

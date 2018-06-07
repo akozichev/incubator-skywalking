@@ -1,0 +1,9 @@
+FROM openjdk:8u151-jre-alpine3.7
+MAINTAINER Andrey Kozichev <akozichev@gmail.com>
+RUN mkdir -p /opt/skywalking/webapp 
+COPY webapp/skywalking-webapp.jar /opt/skywalking/webapp/
+ENV JAVA_OPTS=" -Xms256M -Xmx512M"
+ENV SERVER_PORT 8080
+ENV COLLECTOR_SERVERS 127.0.0.1:10800
+CMD /usr/bin/java ${JAVA_OPTS} -jar /opt/skywalking/webapp/skywalking-webapp.jar --server.port=${SERVER_PORT} --collector.ribbon.listOfServers=${COLLECTOR_SERVERS}
+
