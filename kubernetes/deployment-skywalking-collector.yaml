@@ -24,6 +24,8 @@ items:
             name: skywalking-collector-config
           ports:
           - containerPort: 10800
+          - containerPort: 11800
+          - containerPort: 12800
         volumes:
         - name: skywalking-collector-config
           configMap:
@@ -49,3 +51,6 @@ items:
     ports:
     - port: 10800
       name: skywalking-collector
+    - port: 12800
+      name: skywalking-collector-ui
+
