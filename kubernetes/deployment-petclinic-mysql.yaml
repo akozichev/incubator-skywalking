@@ -5,19 +5,19 @@ items:
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
-    name: mysql
+    name: petclinic-mysql
     labels:
-      app: mysql
+      app: petclinic-mysql
     namespace: skywalking
   spec:
     template:
       metadata:
         labels:
-          app: mysql
+          app: petclinic-mysql
       spec:
         containers:
         - image: "mysql:5.7.8"
-          name: mysql
+          name: petclinic-mysql
           imagePullPolicy: Always
           env:
           - name: MYSQL_ROOT_PASSWORD
@@ -31,15 +31,15 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: mysql
+    name: petclinic-mysql
     labels:
-      app: mysql
+      app: petclinic-mysql
     namespace: skywalking
   spec:
-    type: NodePort
+    clusterIP: None
     selector:
-      app: mysql
+      app: petclinic-mysql
     ports:
     - port: 3306
-      name: mysql
+      name: petclinic-mysql
 
