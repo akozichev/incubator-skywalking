@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: List
+items:
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: jaeger-agent
+    labels:
+      app: jaeger-agent
+    namespace: skywalking
+  spec:
+    template:
+      metadata:
+        labels:
+          app: jaeger-agent
+      spec:
+        containers:
+        - image: jaegertracing/jaeger-agent
+          name: jaeger-agent
+          imagePullPolicy: Always
+          ports: 5775/udp 6831/udp 6832/udp 5778
+          - containerPort: 8080
+          - containerPort: 8081
+          - containerPort: 8082
+          - containerPort: 8083
+          args: [ "--processor.zipkin-compact.server-host-port string" ]
+        imagePullSecrets:
+        - name: registrykey
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: jaeger-agent
+    labels:
+      app: jaeger-agent
+    namespace: skywalking
+  spec:
+    clusterIP: None
+    selector:
+      app: jaeger-agent
+    ports:
+    - port: 8080
+      name: jaeger-agent
+

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  config: |-
+    agent.application_code=petclinic
+    agent.sample_n_per_3_secs=-1
+    agent.span_limit_per_segment=300
+    agent.is_open_debugging_class = false
+    collector.servers=skywalking-collector:10800
+    logging.level=DEBUG
+metadata:
+  name: skywalking-agent-petclinic-config
+  labels:
+    name: skywalking-agent-petclinic-config
+  namespace: skywalking
+  

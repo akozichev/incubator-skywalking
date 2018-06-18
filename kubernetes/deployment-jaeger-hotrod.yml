@@ -1,0 +1,44 @@
+---
+apiVersion: v1
+kind: List
+items:
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: jaeger-hotrod
+    labels:
+      app: jaeger-hotrod
+    namespace: skywalking
+  spec:
+    template:
+      metadata:
+        labels:
+          app: jaeger-hotrod
+      spec:
+        containers:
+        - image: jaegertracing/example-hotrod
+          name: jaeger-hotrod
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080
+          - containerPort: 8081
+          - containerPort: 8082
+          - containerPort: 8083
+          args: [ "--jaeger-agent.host-port=jaeger:6831" ]
+        imagePullSecrets:
+        - name: registrykey
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: jaeger-hotrod
+    labels:
+      app: jaeger-hotrod
+    namespace: skywalking
+  spec:
+    clusterIP: None
+    selector:
+      app: jaeger-hotrod
+    ports:
+    - port: 8080
+      name: jaeger-hotrod
+
