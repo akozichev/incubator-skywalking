@@ -21,7 +21,7 @@ data:
         port: 11800
     agent_gRPC:
       gRPC:
-        host: localhost
+        host: skywalking-collector
         port: 11800
     agent_jetty:
       jetty:
