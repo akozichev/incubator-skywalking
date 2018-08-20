@@ -23,6 +23,7 @@ data:
       gRPC:
         host: skywalking-collector
         port: 11800
+        authentication: PPzfXEGMEbZ6NN7b
     agent_jetty:
       jetty:
         host: localhost
@@ -54,6 +55,7 @@ data:
         ttl: 7
     configuration:
       default:
+        namespace: petshop
         applicationApdexThreshold: 2000
         serviceErrorRateThreshold: 10.00
         serviceAverageResponseTimeThreshold: 2000

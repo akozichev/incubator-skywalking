@@ -53,4 +53,25 @@ items:
       name: skywalking-collector
     - port: 12800
       name: skywalking-collector-ui
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: skywalking-collector-ext
+    labels:
+      app: skywalking-collector-ext
+    namespace: skywalking
+  spec:
+    type: LoadBalancer
+    selector:
+      app: skywalking-collector
+    ports:
+    - port: 10800
+      targetPort: 10800
+      name: skywalking-collector-ext
+    - port: 12800
+      targetPort: 12800
+      name: skywalking-collector-ui-ext
+    - port: 11800
+      targetPort: 11800
+      name: skywalking-collector-grpc-ext
 
